@@ -1,6 +1,8 @@
+import datetime
+
 import openai
-from flask import Flask, render_template, request
-from flask_socketio import SocketIO, send
+from flask import Flask, render_template, request, json
+from flask_socketio import SocketIO, send, emit
 import configparser
 
 config = configparser.ConfigParser()
@@ -62,9 +64,14 @@ def handle_message(msg):
     stream_message = ''
     for line in ai_response:
         stream_message += line
-        send('AI:' + stream_message, broadcast=False)
-
+        send_message('AI: ' + stream_message)
     user_sessions[sid].append({'role': 'assistant', 'content': stream_message})
+
+
+def send_message(message):
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    wrapped_message = json.dumps({'timestamp': timestamp, 'message': message})
+    emit('message', wrapped_message)
 
 
 if __name__ == '__main__':
