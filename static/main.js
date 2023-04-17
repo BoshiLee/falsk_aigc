@@ -12,11 +12,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
     // Receive and display messages from the server
-    socket.on('message', (msg) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = msg;
-        messagesList.appendChild(listItem);
+    socket.on('message', (data) => {
+        const wrappedMessage = JSON.parse(data);
+        const messageId = wrappedMessage.timestamp.replace(/[:\s-]/g, '') + '-' + wrappedMessage.role;
+        let listItem = document.getElementById(messageId);
+
+        if (listItem) {
+            // If an element with the same timestamp and role exists, update its content
+            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.role}: ${wrappedMessage.message}`;
+        } else {
+            // Otherwise, create a new list item and append it to the messages list
+            listItem = document.createElement('li');
+            listItem.id = messageId;
+            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.role}: ${wrappedMessage.message}`;
+            messagesList.appendChild(listItem);
+        }
+
         messagesList.scrollTop = messagesList.scrollHeight;
     });
+
+
 });

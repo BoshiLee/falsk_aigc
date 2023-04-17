@@ -53,7 +53,11 @@ user_sessions = {}
 @socketio.on('message')
 def handle_message(msg):
     msg = str(msg.encode("utf-8").decode("utf-8"))
-    send('Message: ' + msg, broadcast=True, )
+    send_message(role='user',
+                 message='User: ' + msg,
+                 timestamp=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                 )
+
     sid = request.sid
     if sid not in user_sessions:
         user_sessions[sid] = [{'role': 'system', 'content': 'You are a helpful assistant.'}]
@@ -62,15 +66,18 @@ def handle_message(msg):
 
     ai_response = ask_openai_realtime(user_sessions[sid], max_tokens=300, temperature=0.5)
     stream_message = ''
+    timestamp_ai = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     for line in ai_response:
         stream_message += line
-        send_message('AI: ' + stream_message)
+        send_message(role='assistant',
+                     message='AI: ' + line,
+                     timestamp=timestamp_ai
+                     )
     user_sessions[sid].append({'role': 'assistant', 'content': stream_message})
 
 
-def send_message(message):
-    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    wrapped_message = json.dumps({'timestamp': timestamp, 'message': message})
+def send_message(role, message, timestamp):
+    wrapped_message = json.dumps({'timestamp': timestamp, 'message': message, 'role': role})
     emit('message', wrapped_message)
 
 
