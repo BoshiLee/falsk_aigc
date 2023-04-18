@@ -58,22 +58,22 @@ def handle_message(msg):
                  timestamp=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                  )
 
-    sid = request.sid
-    if sid not in user_sessions:
-        user_sessions[sid] = [{'role': 'system', 'content': 'You are a helpful assistant.'}]
-
-    user_sessions[sid].append({'role': 'user', 'content': msg})
-
-    ai_response = ask_openai_realtime(user_sessions[sid], max_tokens=300, temperature=0.5)
-    stream_message = ''
-    timestamp_ai = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    for line in ai_response:
-        stream_message += line
-        send_message(role='assistant',
-                     message='AI: ' + stream_message,
-                     timestamp=timestamp_ai
-                     )
-    user_sessions[sid].append({'role': 'assistant', 'content': stream_message})
+    # sid = request.sid
+    # if sid not in user_sessions:
+    #     user_sessions[sid] = [{'role': 'system', 'content': 'You are a helpful assistant.'}]
+    #
+    # user_sessions[sid].append({'role': 'user', 'content': msg})
+    #
+    # ai_response = ask_openai_realtime(user_sessions[sid], max_tokens=300, temperature=0.5)
+    # stream_message = ''
+    # timestamp_ai = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    # for line in ai_response:
+    #     stream_message += line
+    #     send_message(role='assistant',
+    #                  message='AI: ' + stream_message,
+    #                  timestamp=timestamp_ai
+    #                  )
+    # user_sessions[sid].append({'role': 'assistant', 'content': stream_message})
 
 
 def send_message(role, message, timestamp):

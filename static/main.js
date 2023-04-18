@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     function createMessage(wrappedMessage) {
         const listItem = document.createElement('li');
-        const messageWrapper = document.createElement('div');
+        const messageContainer = document.createElement('div');
         const messageContent = document.createElement('div');
         const timestamp = document.createElement('div');
 
@@ -33,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
         timestamp.innerHTML = wrappedMessage.timestamp;
 
         listItem.classList.add(`${wrappedMessage.role}-message`);
-        messageWrapper.classList.add('message-wrapper');
+        messageContainer.classList.add('message-container');
         messageContent.classList.add('message-content');
         timestamp.classList.add('timestamp');
 
-        messageWrapper.appendChild(messageContent);
-        messageWrapper.appendChild(timestamp);
-        listItem.appendChild(messageWrapper);
+        messageContainer.appendChild(messageContent);
+        messageContainer.appendChild(timestamp);
+        listItem.appendChild(messageContainer);
     return listItem;
 }
 
