@@ -9,9 +9,10 @@ body {
 }
 
 #chatroom {
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 90%;
     border: 1px solid #ddd;
+    border-radius: 30px; /* Add round corners to the input-container */
     display: flex;
     flex-direction: column;
 }
@@ -24,9 +25,49 @@ body {
     overflow-y: auto;
 }
 
+#input-container {
+   display: flex;
+    align-items: center;
+    padding: 15px; /* Add padding around the input-container */
+    gap: 10px; /* Add dynamic space between the message input and send button */
+}
+
 #message {
-    width: 100%;
+    flex-grow: 1;
+    height: 40px; /* Increase the height of the input box */
+    padding: 10px 30px; /* Add padding inside the input box */
+    border-radius: 30px; /* Add round corners to the input box */
+}
+
+#send-button:hover {
+    color: #007bff;
+}
+
+#send-button {
+    background-color: #a4a4a4;
     border: none;
-    padding: 1rem;
-    font-size: 1rem;
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    height: 45px; /* Increase the height of the send button */
+    width: 45px; /* Set the width of the send button to match its height */
+    border-radius: 50%; /* Add round corners to create a circle shape */
+    display: flex; /* Use flexbox to center the icon */
+    justify-content: center; /* Center the icon horizontally */
+    align-items: center; /* Center the icon vertically */
+}
+
+
+.user-message {
+    background-color: #cce5ff;
+    border-radius: 30px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.assistant-message {
+    background-color: #f8d7da;
+    border-radius: 30px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
