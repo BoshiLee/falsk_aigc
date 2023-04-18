@@ -57,26 +57,38 @@ body {
     align-items: center; /* Center the icon vertically */
 }
 
+.user-message,
+.assistant-message {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align assistant messages to the left */
+}
+
+.user-message {
+    align-items: flex-end; /* Align user messages to the right */
+}
+
 .message-wrapper {
     display: inline-block;
-    width: 100%;
 }
 
 .message-content {
     display: inline-block;
     padding: 15px 30px;
     border-radius: 30px;
-    margin-bottom: 5px;
 }
 
 .timestamp {
-    display: block; /* Changed to block */
+    display: block;
     font-size: 12px;
+    padding: 5px 15px 10px 15px; /* top: 5, bottom: 10, horizontal: 15 */
     text-align: left;
-    margin-bottom: 15px;
-    padding-left: 30px;
 }
 
+.user-message .timestamp {
+    text-align: right; /* Align user timestamp to the right */
+}
 .user-message .message-content {
     background-color: #cce5ff;
 }
@@ -84,4 +96,5 @@ body {
 .assistant-message .message-content {
     background-color: #f8d7da;
 }
+
 
