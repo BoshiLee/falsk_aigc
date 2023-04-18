@@ -54,7 +54,7 @@ user_sessions = {}
 def handle_message(msg):
     msg = str(msg.encode("utf-8").decode("utf-8"))
     send_message(role='user',
-                 message='User: ' + msg,
+                 message=msg,
                  timestamp=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                  )
 
@@ -70,7 +70,7 @@ def handle_message(msg):
     for line in ai_response:
         stream_message += line
         send_message(role='assistant',
-                     message='AI: ' + stream_message,
+                     message=stream_message,
                      timestamp=timestamp_ai
                      )
     user_sessions[sid].append({'role': 'assistant', 'content': stream_message})

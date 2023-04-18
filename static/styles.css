@@ -26,7 +26,7 @@ body {
 }
 
 #input-container {
-   display: flex;
+    display: flex;
     align-items: center;
     padding: 15px; /* Add padding around the input-container */
     gap: 10px; /* Add dynamic space between the message input and send button */
@@ -34,9 +34,11 @@ body {
 
 #message {
     flex-grow: 1;
-    height: 40px; /* Increase the height of the input box */
-    padding: 10px 30px; /* Add padding inside the input box */
-    border-radius: 30px; /* Add round corners to the input box */
+    resize: none;
+    overflow: hidden;
+    border-radius: 30px;
+    padding: 15px 30px;
+    text-align: start;
 }
 
 #send-button:hover {
@@ -56,17 +58,23 @@ body {
     justify-content: center; /* Center the icon horizontally */
     align-items: center; /* Center the icon vertically */
 }
+
 .message-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     max-width: 60%;
-    background-color: transparent;
+}
+
+.message-content-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .message-content {
     display: inline-block;
     padding: 15px 30px;
     border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .user-message,
@@ -104,5 +112,22 @@ body {
     background-color: #f8d7da;
 }
 
+.icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #ffffff;
+    background-color: black;
+    text-align: center;
+    flex-shrink: 0; /* Prevent the icon from shrinking */
+}
 
+.user-icon {
+    background-color: #007bff;
+    margin-left: 10px;
+}
 
+.assistant-icon {
+    background-color: #dc3545;
+    margin-right: 10px;
+}
