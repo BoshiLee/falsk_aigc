@@ -21,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (listItem) {
             // If an element with the same timestamp and role exists, update its content
-            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.role}: ${wrappedMessage.message}`;
+            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.message}`;
         } else {
             // Otherwise, create a new list item and append it to the messages list
             listItem = document.createElement('li');
             listItem.id = messageId;
-            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.role}: ${wrappedMessage.message}`;
+            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.message}`;
             messagesList.appendChild(listItem);
         }
 

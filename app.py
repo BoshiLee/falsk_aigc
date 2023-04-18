@@ -70,7 +70,7 @@ def handle_message(msg):
     for line in ai_response:
         stream_message += line
         send_message(role='assistant',
-                     message='AI: ' + line,
+                     message='AI: ' + stream_message,
                      timestamp=timestamp_ai
                      )
     user_sessions[sid].append({'role': 'assistant', 'content': stream_message})
