@@ -23,6 +23,26 @@ document.addEventListener('DOMContentLoaded', () => {
             sendMessage();
         });
     });
+    function createMessage(wrappedMessage) {
+        const listItem = document.createElement('li');
+        const messageWrapper = document.createElement('div');
+        const messageContent = document.createElement('div');
+        const timestamp = document.createElement('div');
+
+        messageContent.innerHTML = wrappedMessage.message;
+        timestamp.innerHTML = wrappedMessage.timestamp;
+
+        listItem.classList.add(`${wrappedMessage.role}-message`);
+        messageWrapper.classList.add('message-wrapper');
+        messageContent.classList.add('message-content');
+        timestamp.classList.add('timestamp');
+
+        messageWrapper.appendChild(messageContent);
+        messageWrapper.appendChild(timestamp);
+        listItem.appendChild(messageWrapper);
+    return listItem;
+}
+
 
     // Receive and display messages from the server
     socket.on('message', (data) => {
@@ -32,16 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (listItem) {
             // If an element with the same timestamp and role exists, update its content
-            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.message}`;
+            listItem.querySelector('.message-content').textContent = wrappedMessage.message;
         } else {
-            // Otherwise, create a new list item and append it to the messages list
-            listItem = document.createElement('li');
+            // Otherwise, create a new list item using the reusable function
+            listItem = createMessage(wrappedMessage);
             listItem.id = messageId;
-            listItem.className = `${wrappedMessage.role}-message`;
-            listItem.textContent = `[${wrappedMessage.timestamp}] ${wrappedMessage.message}`;
             messagesList.appendChild(listItem);
         }
-
         messagesList.scrollTop = messagesList.scrollHeight;
     });
 
