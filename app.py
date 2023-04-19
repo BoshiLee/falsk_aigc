@@ -1,4 +1,3 @@
-import openai
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 import configparser
@@ -8,7 +7,7 @@ from controllers.socket_message_handler import handle_message
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-openai.api_key = config['openai']['api_key']
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config['flask']['secret_key']
