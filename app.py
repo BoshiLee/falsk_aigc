@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_socketio import SocketIO
 import configparser
 
@@ -22,7 +22,7 @@ def index():
 
 @app.route('/conversation', methods=['GET', 'POST'])
 def handle_conversation():
-    return conversation(user_sessions)
+    return jsonify(conversation(user_sessions))
 
 
 @socketio.on('message')

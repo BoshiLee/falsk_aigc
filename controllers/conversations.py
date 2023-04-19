@@ -4,7 +4,9 @@ from flask import request
 
 
 def conversation(user_sessions):
-    sid = request.sid
+    if len(user_sessions) == 0:
+        return {'messages': []}
+    sid = next(iter(user_sessions))
 
     if request.method == 'POST':
         data = request.get_json()
