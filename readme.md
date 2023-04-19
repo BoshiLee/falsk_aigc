@@ -43,6 +43,6 @@ Replace `your_openai_api_key_here` with your actual OpenAI API key.
 
 ## Help and Support
 
-If you have any questions, need assistance, or encounter any issues while using our chatroom website, please don't hesitate to reach out to our support team at [support@example.com](mailto:support@example.com).
+If you have any questions, need assistance, or encounter any issues while using our chatroom website, please don't hesitate to reach out to our support team at [support@example.com](mailto:boshi.litw@gmail.com).
 
 Enjoy chatting!
