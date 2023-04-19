@@ -1,18 +1,10 @@
-import os
+from utils.config import Config
 import openai
-import configparser
 
-config = configparser.ConfigParser()
-
-config_file_path = os.path.join(os.path.dirname(__file__), '..', 'config.ini')
-config.read(config_file_path)
-
-openai.api_key = config['openai']['api_key']
-model = config['openai']['model']
-
+openai.api_key = Config().openai_api_key
 
 def ask_openai(messages, mak_tokens=300):
-    response = openai.ChatCompletion.create(model=model,
+    response = openai.ChatCompletion.create(model=Config().model,
                                             messages=messages,
                                             max_tokens=mak_tokens,
                                             temperature=0.5,
@@ -23,7 +15,7 @@ def ask_openai(messages, mak_tokens=300):
 
 
 def ask_openai_realtime(messages, max_tokens=300, temperature=0.5):
-    response = openai.ChatCompletion.create(model=model,
+    response = openai.ChatCompletion.create(model=Config().model,
                                             messages=messages,
                                             max_tokens=max_tokens,
                                             temperature=temperature,

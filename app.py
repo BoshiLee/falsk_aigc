@@ -1,15 +1,12 @@
+from utils.config import Config
 from flask import Flask, render_template, jsonify
 from flask_socketio import SocketIO
-import configparser
 
 from controllers.conversations import conversation
 from controllers.socket_message_handler import handle_message
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-
 app = Flask(__name__)
-app.config['SECRET_KEY'] = config['flask']['secret_key']
+app.config['SECRET_KEY'] = Config().secret_key
 socketio = SocketIO(app)
 
 user_sessions = {}
