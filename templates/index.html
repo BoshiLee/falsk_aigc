@@ -16,6 +16,7 @@
         </div>
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
-    <script src="/static/main.js"></script>
+    <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='messageHelper.js') }}"></script>
 </body>
 </html>

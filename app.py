@@ -8,7 +8,6 @@ from controllers.socket_message_handler import handle_message
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config['flask']['secret_key']
 socketio = SocketIO(app)
