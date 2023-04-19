@@ -37,4 +37,32 @@ const createMessage = (wrappedMessage) => {
     return listItem;
 };
 
-export default createMessage;
+const sendMessage = (socket, messageInput) => {
+  if (messageInput.value) {
+    socket.send(messageInput.value);
+    messageInput.value = "";
+  }
+};
+
+const handleIncomingMessage = (socket, messagesList) => {
+  socket.on("message", (data) => {
+    const wrappedMessage = JSON.parse(data);
+    const messageId =
+      wrappedMessage.timestamp.replace(/[:\s-]/g, "") +
+      "-" +
+      wrappedMessage.role;
+    let listItem = document.getElementById(messageId);
+
+    if (listItem) {
+      listItem.querySelector(".message-content").textContent =
+        wrappedMessage.message;
+    } else {
+      listItem = createMessage(wrappedMessage);
+      listItem.id = messageId;
+      messagesList.appendChild(listItem);
+    }
+    messagesList.scrollTop = messagesList.scrollHeight;
+  });
+};
+
+export { handleIncomingMessage, sendMessage };

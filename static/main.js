@@ -1,21 +1,12 @@
-import createMessage from "./messageHelper.js";
+import {handleIncomingMessage, sendMessage} from "./messageHelper.js";
+import socket from "./socketUtil.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  const socket = io.connect("http://" + document.domain + ":" + location.port);
 
   // Elements
   const sendButton = document.getElementById("send-button");
   const messagesList = document.getElementById("messages");
   const messageInput = document.getElementById("message");
-
-  // Functions
-  const sendMessage = () => {
-    if (messageInput.value) {
-      socket.send(messageInput.value);
-      messageInput.value = "";
-    }
-  };
-
-
 
   // Event listeners
   messageInput.addEventListener("input", function () {
@@ -27,31 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("connected");
     messageInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        sendMessage();
+        sendMessage(socket, messageInput);
       }
     });
 
     sendButton.addEventListener("click", () => {
-      sendMessage();
+      sendMessage(socket, messageInput);
     });
   });
 
-  socket.on("message", (data) => {
-    const wrappedMessage = JSON.parse(data);
-    const messageId =
-      wrappedMessage.timestamp.replace(/[:\s-]/g, "") +
-      "-" +
-      wrappedMessage.role;
-    let listItem = document.getElementById(messageId);
-
-    if (listItem) {
-      listItem.querySelector(".message-content").textContent =
-        wrappedMessage.message;
-    } else {
-      listItem = createMessage(wrappedMessage);
-      listItem.id = messageId;
-      messagesList.appendChild(listItem);
-    }
-    messagesList.scrollTop = messagesList.scrollHeight;
-  });
+  handleIncomingMessage(socket, messagesList);
 });
