@@ -18,9 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
   socket.on("connect", () => {
     console.log("connected");
     loadConversation(messagesList).then(messages => {
-      console.log("messages", messages);
         for (const message of messages) {
-            handleMessage(messagesList, message);
+            handleMessage(message);
         }
       }
     );

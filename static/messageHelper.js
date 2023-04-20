@@ -45,7 +45,7 @@ const sendMessage = (socket, messageInput) => {
 };
 
 const handleMessage = (wrappedMessage) => {
-    console.log("handleMessage", wrappedMessage);
+    console.log("handleMessage: wrappedMessage", wrappedMessage);
     const messageId =
       wrappedMessage.timestamp.replace(/[:\s-]/g, "") +
       "-" +
