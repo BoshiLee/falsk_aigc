@@ -49,7 +49,6 @@ def handle_message(msg, user_sessions):
     )
 
 
-
 def save_message(sid: str, user_sessions: dict, role: str, content: str, timestamp: str):
     if sid not in user_sessions:
         user_sessions[sid] = [{'role': role, 'content': content, 'timestamp': timestamp}]
