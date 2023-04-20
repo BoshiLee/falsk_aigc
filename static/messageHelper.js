@@ -45,7 +45,6 @@ const sendMessage = (socket, messageInput) => {
 };
 
 const handleMessage = (wrappedMessage) => {
-    console.log("handleMessage: wrappedMessage", wrappedMessage);
     const messageId =
       wrappedMessage.timestamp.replace(/[:\s-]/g, "") +
       "-" +
@@ -62,15 +61,19 @@ const handleMessage = (wrappedMessage) => {
     }
 }
 
+const addMessageToList = (listItem, messagesList) => {
+    if (listItem) {
+      messagesList.appendChild(listItem);
+    }
+    messagesList.scrollTop = messagesList.scrollHeight;
+}
+
 const onIncomingMessage = (socket, messagesList) => {
   socket.on("message", (data) => {
       const wrappedMessage = JSON.parse(data);
       let listItem = handleMessage(wrappedMessage, messagesList);
-      if (listItem) {
-        messagesList.appendChild(listItem);
-      }
-      messagesList.scrollTop = messagesList.scrollHeight;
+      addMessageToList(listItem, messagesList)
   });
 };
 
-export { onIncomingMessage, sendMessage, handleMessage };
+export { onIncomingMessage, sendMessage, handleMessage, addMessageToList };

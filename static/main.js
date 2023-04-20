@@ -1,7 +1,7 @@
 // main.js
-import {handleMessage, onIncomingMessage, sendMessage} from "./messageHelper.js";
+import {handleMessage, addMessageToList, onIncomingMessage, sendMessage} from "./messageHelper.js";
 import socket from "./socketUtil.js";
-import { loadConversation } from "./conversationHelper.js";
+import { fetchConversation } from "./conversationHelper.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Elements
@@ -17,9 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   socket.on("connect", () => {
     console.log("connected");
-    loadConversation(messagesList).then(messages => {
+    fetchConversation(messagesList).then(messages => {
         for (const message of messages) {
-            handleMessage(message);
+            const listItem = handleMessage(message);
+            addMessageToList(listItem, messagesList);
         }
       }
     );

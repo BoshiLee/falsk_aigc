@@ -1,9 +1,8 @@
 // conversationHelper.js
 
-export async function loadConversation() {
+export async function fetchConversation() {
   const response = await fetch("/conversation");
   const data = await response.json();
-  console.log("Conversation loaded:", data);
   if (data && data.messages) {
     return data.messages;
   }
