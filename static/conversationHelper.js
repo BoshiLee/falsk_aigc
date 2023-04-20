@@ -1,15 +1,11 @@
 // conversationHelper.js
-import { handleIncomingMessage } from "./messageHelper.js";
-import socket from "./socketUtil.js";
 
-export async function loadConversation(messagesList) {
+export async function loadConversation() {
   const response = await fetch("/conversation");
   const data = await response.json();
-
+  console.log("Conversation loaded:", data);
   if (data && data.messages) {
-    for (const message of data.messages) {
-      handleIncomingMessage(socket, messagesList, message);
-    }
+    return data.messages;
   }
 }
 

@@ -13,7 +13,7 @@ const createMessage = (wrappedMessage) => {
       wrappedMessage.role === "user"
         ? "icon fas fa-user user-icon"
         : "icon fas fa-robot assistant-icon";
-    messageContent.innerHTML = wrappedMessage.message;
+    messageContent.innerHTML = wrappedMessage.content;
     timestamp.innerHTML = wrappedMessage.timestamp;
     listItem.classList.add(`${wrappedMessage.role}-message`);
     messageContainer.classList.add("message-container");
@@ -44,9 +44,8 @@ const sendMessage = (socket, messageInput) => {
   }
 };
 
-const handleIncomingMessage = (socket, messagesList) => {
-  socket.on("message", (data) => {
-    const wrappedMessage = JSON.parse(data);
+const handleMessage = (wrappedMessage) => {
+    console.log("handleMessage", wrappedMessage);
     const messageId =
       wrappedMessage.timestamp.replace(/[:\s-]/g, "") +
       "-" +
@@ -55,14 +54,23 @@ const handleIncomingMessage = (socket, messagesList) => {
 
     if (listItem) {
       listItem.querySelector(".message-content").textContent =
-        wrappedMessage.message;
+        wrappedMessage.content;
     } else {
       listItem = createMessage(wrappedMessage);
       listItem.id = messageId;
-      messagesList.appendChild(listItem);
+      return listItem;
     }
-    messagesList.scrollTop = messagesList.scrollHeight;
+}
+
+const onIncomingMessage = (socket, messagesList) => {
+  socket.on("message", (data) => {
+      const wrappedMessage = JSON.parse(data);
+      let listItem = handleMessage(wrappedMessage, messagesList);
+      if (listItem) {
+        messagesList.appendChild(listItem);
+      }
+      messagesList.scrollTop = messagesList.scrollHeight;
   });
 };
 
-export { handleIncomingMessage, sendMessage };
+export { onIncomingMessage, sendMessage, handleMessage };

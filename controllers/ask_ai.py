@@ -3,6 +3,7 @@ import openai
 
 openai.api_key = Config().openai_api_key
 
+
 def ask_openai(messages, mak_tokens=300):
     response = openai.ChatCompletion.create(model=Config().model,
                                             messages=messages,
