@@ -37,8 +37,17 @@ def handle_message(msg, user_sessions):
             user_sessions=user_sessions,
             role='assistant',
             content=stream_message,
-            timestamp=timestamp_ai
+            timestamp=timestamp_ai,
+            save=False
         )
+    save_message(
+        sid=sid,
+        user_sessions=user_sessions,
+        role='assistant',
+        content=stream_message,
+        timestamp=timestamp_ai,
+    )
+
 
 
 def save_message(sid: str, user_sessions: dict, role: str, content: str, timestamp: str):
@@ -48,13 +57,14 @@ def save_message(sid: str, user_sessions: dict, role: str, content: str, timesta
         user_sessions[sid].append({'role': role, 'content': content, 'timestamp': timestamp})
 
 
-def send_message(sid: str, user_sessions: dict, role: str, content: str, timestamp: str):
+def send_message(sid: str, user_sessions: dict, role: str, content: str, timestamp: str, save: bool = True):
     wrapped_message = json.dumps({'role': role, 'content': content, 'timestamp': timestamp})
     emit('message', wrapped_message)
-    save_message(
-        sid=sid,
-        user_sessions=user_sessions,
-        role=role,
-        content=content,
-        timestamp=timestamp
-    )
+    if save:
+        save_message(
+            sid=sid,
+            user_sessions=user_sessions,
+            role=role,
+            content=content,
+            timestamp=timestamp
+        )
