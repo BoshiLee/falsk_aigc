@@ -16,4 +16,6 @@ def conversation(user_sessions):
         return {'success': False}, 400
 
     if request.method == 'GET':
-        return {'messages': user_sessions.get(sid, [])}
+        return {'messages': [
+            i for i in user_sessions[sid] if (i['role'] != 'system')
+        ]}
